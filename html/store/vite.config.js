@@ -19,11 +19,22 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/react/app.js',
+                'resources/react/main.js',
+                'resources/react/lab.js',
             ],
             refresh: true,
         }),
         react(),
     ],
+    build: {
+        rollupOptions: {
+            output: {
+                entryFileNames: 'assets/[name].js',
+                chunkFileNames: 'assets/[name].js',
+                assetFileNames: 'assets/[name].[ext]',
+            }
+        }
+    },
     optimizeDeps: {
         force: true,
         esbuildOptions: {

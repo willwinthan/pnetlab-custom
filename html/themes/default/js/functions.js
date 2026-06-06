@@ -2564,7 +2564,8 @@ function printListNodes(nodes) {
 // Print lab open page
 function printPageLabOpen(lab) {
     $('#body').html('<div id="react-lab-root" class="h-screen w-screen overflow-hidden"></div>');
-    $('#body').append('<script src="/store/public/react/js/lab.js" type="text/javascript"></script>');
+    $('head').append('<link rel="stylesheet" href="/store/public/build/assets/app.css" type="text/css" />');
+    $('#body').append('<script src="/store/public/build/assets/lab.js" type="text/javascript"></script>');
 }
 
 
