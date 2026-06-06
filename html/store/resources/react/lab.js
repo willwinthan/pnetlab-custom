@@ -1,9 +1,5 @@
 require('./bootstrap');
-/**
- * Next, we will create a fresh React component instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+
 import React, { lazy, Suspense } from 'react';
 import { render } from 'react-dom'
 import Loading from './components/common/Loading'
@@ -25,7 +21,6 @@ import LinkQuality from './components/lab/link/LinkQuality';
 import LineControl from './components/lab/line/LineControl';
 import LockLabModal from './components/lab/locklab/LockLabModal';
 import LabBackground from './components/lab/background/LabBackground';
-import Member from './components/lab/members/Members';
 import NodeSize from './components/lab/node/NodeSize';
 import StatusModal from './components/lab/status/StatusModal';
 import NodeFolderModal from './components/lab/commit/NodeFolderModal';
@@ -35,6 +30,7 @@ import IconEditor from './components/lab/image/IconEditor';
 require('./components/lab/multiconfig/MultiCfgInit');
 import topology from './components/lab/topology/topology';
 import NodeForm from './components/lab/node/NodeForm';
+import UnifiedSidebar from './components/menu/UnifiedSidebar';
 
 global.App = {};
 App.server = server;
@@ -55,91 +51,96 @@ App.isMobile = () => {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
-
 App.onReadyRegister = [];
 App.topology = new topology();
 var dataProcess = App.topology.getTopoData()
 
-var frame = document.createElement("div");
-document.body.appendChild(frame)
-render(<>
-  <Loading ref={(loading) => { App.Loading = loading }} flag={false} text="Loading..." />
-  <ContextMenu></ContextMenu>
-  <IconEditor></IconEditor>
-</>, frame);
+function LabLayout() {
+  const labPath = window.lab ? window.lab.filename : (window.LAB || "");
 
+  return (
+    <div className="flex h-screen w-screen overflow-hidden bg-slate-950 text-slate-100 font-sans">
+      {/* 1. Left Sidebar Navigation */}
+      <UnifiedSidebar />
 
-var bottom = document.createElement("div");
-bottom.setAttribute('class', 'bottom_frame box_flex')
-document.body.appendChild(bottom)
-render(<>
-  <style>{`
-    .bottom_frame{
-      position: fixed;
-      bottom: 5px;
-      left: 0px;
-      right: 0px;
-      z-index: 1041;
-      pointer-events: none;
-      transition: all 0.2s ease-out;
-    }
-    :root {
-      --ck-z-modal: 1060;
-    }
-    .bottom_frame *{
-      pointer-events: auto;
-    }
-  `}</style>
+      {/* 2. Main Lab Viewport Area */}
+      <div className="flex-1 flex flex-col relative h-full overflow-hidden">
+        {/* jsPlumb Interactive Topology Canvas */}
+        <div 
+          id="lab-viewport" 
+          data-path={labPath}
+          className="flex-1 overflow-auto relative bg-[#09152b] scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent select-none"
+        >
+          {/* Nodes and SVG connections are appended here by topology.js */}
+        </div>
 
-  <link rel="stylesheet" href="/store/public/extensions/icons/css/font-awesome.min.css" media="all" type="text/css" />
-  <Wb_bar></Wb_bar>
+        {/* 3. Floating Overlay Controls */}
+        <div className="absolute top-4 right-4 z-30">
+          <Topo />
+        </div>
 
-  <div className='box_flex' style={{ flexGrow: 1, pointerEvents: 'none' }}>
-    <div className='box_flex' style={{ margin: 'auto', pointerEvents: 'auto' }}>
-      <Wireshark></Wireshark>&nbsp;
-      <HTMLConsole></HTMLConsole>
+        <div className="absolute top-4 left-4 z-30 pointer-events-none">
+          <div className="pointer-events-auto">
+            <Timer />
+          </div>
+        </div>
+
+        {/* 4. Bottom Capture/Terminal Pill Controls */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3 pointer-events-none">
+          <div className="pointer-events-auto flex gap-3">
+            <Wireshark />
+            <HTMLConsole />
+          </div>
+        </div>
+      </div>
+
+      {/* Legacy Portals & Dialog Modals */}
+      <Wb_bar />
+      <TextControl />
+      <NodeSize />
+      <LinkControl />
+      <LineControl ref={c => App.lineControl = c} />
+      <LinkQuality />
+      <LockLabModal />
+      <LabBackground />
+      <StatusModal />
+      <NodeFolderModal />
+      <NodeCommitModal />
+      <NodeForm />
+      
+      {/* Global Utilities */}
+      <Loading ref={(loading) => { App.Loading = loading }} flag={false} text="Loading..." />
+      <ContextMenu />
+      <IconEditor />
+
+      {/* Notifications system container */}
+      <div>
+        <div id="alert_container" style={{ display: 'none' }}>
+          <b>
+            <i className="fa fa-bell-o"></i> Notifications&nbsp;
+            <i id="alert_container_close" className="pull-right fa fa-times" style={{ color: 'red', cursor: 'pointer', padding: 2 }}></i>
+          </b>
+          <div className="inner" style={{ overflow: 'auto', maxHeight: 400 }}></div>
+        </div>
+        <div id="notification_container" />
+      </div>
     </div>
-  </div>
+  );
+}
 
-  <Topo></Topo>
-  <Timer></Timer>
-  <TextControl></TextControl>
-  <NodeSize></NodeSize>
-  <LinkControl></LinkControl>
-  <LineControl ref={c => App.lineControl = c}></LineControl>
-  <LinkQuality></LinkQuality>
-  <LockLabModal></LockLabModal>
-  <LabBackground></LabBackground>
-  <StatusModal></StatusModal>
-  <NodeFolderModal></NodeFolderModal>
-  <NodeCommitModal></NodeCommitModal>
-  <NodeForm></NodeForm>
-
-</>, bottom, () => {
-  
-  dataProcess.then(() => {
-    App.topology.printTopology()
-    App.onReadyRegister.map(func =>{
-      func();
-    })
-  })
-  
-});
-
-render(<Member></Member>, document.getElementById('lab_members'))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Mount the app to #react-lab-root and register initialization hooks
+const mountPoint = document.getElementById('react-lab-root');
+if (mountPoint) {
+  render(
+    <LabLayout />, 
+    mountPoint, 
+    () => {
+      dataProcess.then(() => {
+        App.topology.printTopology()
+        App.onReadyRegister.map(func => {
+          if (typeof func === 'function') func();
+        })
+      })
+    }
+  );
+}

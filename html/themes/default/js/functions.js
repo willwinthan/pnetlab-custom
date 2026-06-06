@@ -2563,69 +2563,8 @@ function printListNodes(nodes) {
 
 // Print lab open page
 function printPageLabOpen(lab) {
-
-    var gim = localStorage.getItem('left_menu_gim');
-    if(gim == 1) $('body').addClass('fixed');
-
-    var html = `
-                <div id="lab-sidebar">
-                    <div id="lab-sizebar-button"><i class="fa fa-chevron-right"></i></div>
-                    <div id="lab-sidebar-menu">
-                        <ul></ul>
-                        <div style="padding:0px 7px"><hr/></div>
-                        <div id="lab_members"></div>
-                        <br/>
-                        <div style="padding-left:11px">
-                            <a class="action-logout" href="javascript:void(0)"><i class="glyphicon glyphicon-log-out" style="margin-right:7px"></i><span class="lab-sidebar-title">${lang('Logout')}</span></a>
-                        </div>
-                    </div>
-                    <div class="logo_img">
-                        <img src='/store/public/assets/auth/img/logo.png' style="max-width:90%"></img>
-                    </div>
-
-                    <i id="gim" class="button fa fa-thumb-tack" onClick="gimMenu()"></i>
-                    
-                </div>
-
-
-
-                <div id="lab-viewport">
-
-                
-                </div>
-
-                <div>
-                    <div id="alert_container" style="display:none" >
-                        <b>
-                            <i class="fa fa-bell-o"></i> ${lang("Notifications")}&nbsp;
-                            <i id="alert_container_close" class="pull-right fa fa-times" style="color: red; cursor:pointer; padding:2px"></i>
-                        </b>
-                        <div class="inner" style="overflow:auto; max-height:400px"></div>
-                    </div>
-                    <div id="notification_container"></div> 
-                </div>
-                
-                `;
-
-    $('#body').html(html);
-
-    $('#lab-sidebar ul').append('<li class="action-labobjectadd-li"><a class="action-labobjectadd" href="javascript:void(0)" title="' + lang('Add an object') + '"><i class="glyphicon glyphicon-plus"></i><span class="lab-sidebar-title">' + lang('Add an object') + '</span></a></li>');
-    $('#lab-sidebar ul').append('<li><a class="action-moreactions" href="javascript:void(0)" title="' + lang('Setup Nodes') + '"><i class="fa fa-cogs"></i><span class="lab-sidebar-title">' + lang('Setup Nodes') + '</span></a></li>');
-    $('#lab-sidebar ul').append('<li><a class="action-configsget"  href="javascript:void(0)" title="' + lang('Startup Configs') + '"><i class="fa fa-list-alt"></i><span class="lab-sidebar-title">' + lang('Startup Configs') + '</span></a></li>');
-    // $('#lab-sidebar ul').append('<li><a class="action-configobjects" href="javascript:void(0)" title="' + lang('Config Objects') + '"><i class="fa fa-cubes"></i><span class="lab-sidebar-title">' + lang('Config Objects') + '</span></a></li>');
-    $('#lab-sidebar ul').append('<li class="action-picturesget-li"><a class="action-picturesget" href="javascript:void(0)" title="' + lang('Pictures') + '"><i class="glyphicon glyphicon-picture"></i><span class="lab-sidebar-title">' + lang('Pictures') + '</span></a></li>');
-    $('#lab-sidebar ul').append('<li><a class="action-labtopologyrefresh" href="javascript:void(0)"><i class="glyphicon glyphicon-refresh"></i><span class="lab-sidebar-title">' + lang("Refresh topology") + '</span></a></li>');
-    $('#lab-sidebar ul').append('<li id="action_lock_lab"></li>');
-    $('#lab-sidebar ul').append('<div id="action-labclose"><li><a class="action-labclose" href="javascript:void(0)"><i class="glyphicon glyphicon-off"></i><span class="lab-sidebar-title">' + lang("Close Lab") + '</span></a></li></div>');
-    $('#lab-sidebar ul').append('<div id="action-labdestroy"><li><a class="action-labdestroy" href="javascript:void(0)"><i class="fa fa-chain-broken"></i><span class="lab-sidebar-title">' + lang('Destroy Lab') + '</span></a></li></div>');
-    $('#lab-sidebar ul').append('<div style="padding:0px 7px"><hr/></div>');
-    $('#lab-sidebar ul').append('<li><a class="action-systemstatus" href="javascript:void(0)" title="' + lang("System Status") + '"><i class="fa fa-bar-chart-o"></i><span class="lab-sidebar-title">' + lang("System Status") + '</span></a></li>');
-    $('#lab-sidebar ul').append('<li><a class="action-editbackground" href="javascript:void(0)" title="' + lang("Background") + '"><i class="fa fa-map-o"></i><span class="lab-sidebar-title">' + lang("Background") + '</span></a></li>');
-    $('#lab-sidebar ul').append('<li><a class="lab_workbook" href="javascript:void(0)" title="' + lang("Workbook") + '"><i class="fa fa-book"></i><span class="lab-sidebar-title">' + lang("Workbook") + '</span></a></li>');
-    $('#lab-sidebar ul').append('<li id="action_change_console"></li>');
-
+    $('#body').html('<div id="react-lab-root" class="h-screen w-screen overflow-hidden"></div>');
     $('#body').append('<script src="/store/public/react/js/lab.js" type="text/javascript"></script>');
-
 }
 
 
