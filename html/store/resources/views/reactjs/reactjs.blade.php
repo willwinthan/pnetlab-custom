@@ -45,7 +45,8 @@ use App\Helpers\Control\Ctrl;
 
 <div id="app"></div>
 
-<script src="{{url('/')}}/react/js/app.js"></script>
+@viteReactRefresh
+@vite('resources/react/app.js')
 
 @endsection
 
