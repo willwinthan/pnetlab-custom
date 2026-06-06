@@ -295,7 +295,9 @@ function listNodeImages($t, $p)
 		default:
 			break;
 		case 'iol':
-			foreach (scandir(BASE_DIR . '/addons/iol/bin') as $name => $filename) {
+			$dirPath = BASE_DIR . '/addons/iol/bin';
+			$scan = is_dir($dirPath) ? scandir($dirPath) : array();
+			foreach ($scan as $name => $filename) {
 
 				if ($p == 'iol') {
 					if (preg_match('/^.+\.bin$/', $filename)) {
@@ -309,14 +311,18 @@ function listNodeImages($t, $p)
 			}
 			break;
 		case 'qemu':
-			foreach (scandir(BASE_DIR . '/addons/qemu') as $dir) {
+			$dirPath = BASE_DIR . '/addons/qemu';
+			$scan = is_dir($dirPath) ? scandir($dirPath) : array();
+			foreach ($scan as $dir) {
 				if (is_dir(BASE_DIR . '/addons/qemu/' . $dir) && preg_match('/^' . $p . '-.+$/', $dir)) {
 					$results[$dir] = $dir;
 				}
 			}
 			break;
 		case 'dynamips':
-			foreach (scandir(BASE_DIR . '/addons/dynamips') as $filename) {
+			$dirPath = BASE_DIR . '/addons/dynamips';
+			$scan = is_dir($dirPath) ? scandir($dirPath) : array();
+			foreach ($scan as $filename) {
 				if (is_file(BASE_DIR . '/addons/dynamips/' . $filename) && preg_match('/^' . $p . '-.+\.(image|bin)$/', $filename)) {
 					$results[$filename] = $filename;
 				}
