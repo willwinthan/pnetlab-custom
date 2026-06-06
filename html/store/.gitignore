@@ -1,2 +1,4 @@
 vendor
 ccie_box.code-workspace
+node_modules/
+public/build/

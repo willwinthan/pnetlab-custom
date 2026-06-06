@@ -6,7 +6,7 @@ import BtnLoad from '../button/BtnLoad'
 import Table from '../table/Table'
 import Pagination from '../table/Pagination'
 import MainTable from '../table/MainTable'
-import * as scss from '@root/assets/css/constants?module'
+import scss from '@root/assets/css/constants.module.scss'
 
 class FuncEdit extends Component {
 	

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import(/* webpackMode: "eager" */'./responsive/menu_client.scss')
 
 import UserName from './UserName'
-import { a, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import mnf from './menu_func';
 import Syslog from './Syslog'
 import RunningLabButton from '../realtime/RunningLabButton';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Menu from '../menu/MenuClient'
-import * as scss from '@root/assets/css/constants?module'
+import scss from '@root/assets/css/constants.module.scss'
 
 class Layout extends Component {
 	
