@@ -94,6 +94,7 @@ echo -e "\n${YELLOW}[6/6] Ensuring MySQL compatibility settings...${NC}"
 # In MySQL 8.0/8.4, native password auth might need to be explicitly allowed or configured
 MYSQL_CONF="/etc/mysql/conf.d/pnetlab_compat.cnf"
 echo -e "Creating database compatibility config at $MYSQL_CONF..."
+mkdir -p "$(dirname "$MYSQL_CONF")"
 cat <<EOF > "$MYSQL_CONF"
 [mysqld]
 # Enable legacy authentication method compatibility if required
