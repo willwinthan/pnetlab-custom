@@ -1,0 +1,13 @@
+Package: pnetlab-schema
+Version: 4.0.0
+Name: schema
+Architecture: amd64
+Maintainer: pnetlab.com
+Homepage: http://www.pnetlab.com/
+Installed-Size: 84
+Section: devel
+Priority: optional
+Provides: pnetlab-schema
+Pre-Depends: debconf, mysql-server
+Replaces: eve-ng-schema
+Description: Database schema for PNETLab

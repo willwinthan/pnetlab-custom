@@ -1,0 +1,15 @@
+Package: pnetlab-vpcs
+Version: 1.0
+Name: Unetlab Virtual PC
+Architecture: amd64
+Section: devel
+Priority: optional
+Maintainer: pnetlab.com
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.4
+Homepage: http://www.pnetlab.com
+Conflicts: unetlab-vpcs, eve-ng-vpcs
+Replaces: unetlab-vpcs, eve-ng-vpcs
+Description: vpcs PNETLab compatible
+ vpcs is a small virtual pc with ping traceroute for integration
+ in Labs Unetlab
