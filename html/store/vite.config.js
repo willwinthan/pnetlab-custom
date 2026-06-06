@@ -1,9 +1,20 @@
-import { defineConfig } from 'vite';
+import { defineConfig, transformWithEsbuild } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
     plugins: [
+        {
+            name: 'treat-js-files-as-jsx',
+            async transform(code, id) {
+                if (!id.match(/resources\/react\/.*\.js$/)) return null;
+                
+                return transformWithEsbuild(code, id, {
+                    loader: 'jsx',
+                    jsx: 'automatic',
+                });
+            },
+        },
         laravel({
             input: [
                 'resources/react/app.js',
@@ -12,6 +23,14 @@ export default defineConfig({
         }),
         react(),
     ],
+    optimizeDeps: {
+        force: true,
+        esbuildOptions: {
+            loader: {
+                '.js': 'jsx',
+            },
+        },
+    },
     resolve: {
         alias: {
             '@root': '/resources',
