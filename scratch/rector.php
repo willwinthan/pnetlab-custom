@@ -7,15 +7,15 @@ use Rector\Set\ValueObject\LevelSetList;
 return static function (RectorConfig $rectorConfig): void {
     // Specify the paths to scan (legacy PHP backend files)
     $rectorConfig->paths([
-        __DIR__ . '/../html/includes',
-        __DIR__ . '/../html/api.php',
+        __DIR__ . '/../includes',
+        __DIR__ . '/../api.php',
     ]);
 
     // Exclude third party libraries if any (e.g., Slim framework)
     $rectorConfig->skip([
-        __DIR__ . '/../html/includes/Slim',
-        __DIR__ . '/../html/includes/Slim-Extras',
-        __DIR__ . '/../html/includes/Parsedown.php',
+        __DIR__ . '/../includes/Slim',
+        __DIR__ . '/../includes/Slim-Extras',
+        __DIR__ . '/../includes/Parsedown.php',
     ]);
 
     // Define rules for PHP 8.3 compatibility
