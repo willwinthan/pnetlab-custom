@@ -1,6 +1,7 @@
 import { defineConfig, transformWithEsbuild } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
+import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig({
     plugins: [
@@ -33,9 +34,9 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            '@root': '/resources',
-            '@react': '/resources/react',
-            '@comp': '/resources/react/components',
+            '@root': fileURLToPath(new URL('./resources', import.meta.url)),
+            '@react': fileURLToPath(new URL('./resources/react', import.meta.url)),
+            '@comp': fileURLToPath(new URL('./resources/react/components', import.meta.url)),
         },
     },
 });
