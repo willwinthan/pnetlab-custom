@@ -33,6 +33,7 @@ export default defineConfig({
         },
     },
     resolve: {
+        extensions: ['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json', '.scss', '.css'],
         alias: {
             '@root': fileURLToPath(new URL('./resources', import.meta.url)),
             '@react': fileURLToPath(new URL('./resources/react', import.meta.url)),
